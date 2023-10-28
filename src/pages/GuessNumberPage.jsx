@@ -1,10 +1,11 @@
-import {useState} from "react";
+import {useState, useRef, useEffect} from "react";
 import {Navbar} from "../components/Navbar.jsx";
 
 export const GuessNumberPage = () => {
   const [correctNumber, setCorrectNumber] = useState(Math.floor(Math.random() * 100) + 1)
   const [guessingNumber, setGuessingNumber] = useState('')
   const [hint, setHint] = useState('')
+  const inputRef = useRef(null)
   console.log('correct number: ', correctNumber)
 
   function updateGuessedNumber(e) {
@@ -32,15 +33,20 @@ export const GuessNumberPage = () => {
     setHint('')
   }
 
+  useEffect(() => {
+    inputRef.current.focus()
+  }, [])
+
   return (
     <div>
       <Navbar/>
 
       <h1>Let's guess the number (1-100)</h1>
-      <input value={guessingNumber} type={"number"} onChange={updateGuessedNumber}/> <br/>
+      <input ref={inputRef} value={guessingNumber} type={"number"} onChange={updateGuessedNumber}/> <br/>
       <button onClick={guess}>Guess</button>
       <button onClick={reset}>Reset</button>
       <h2>{hint}</h2>
+      <h2>Random number: {correctNumber}</h2>
     </div>
   )
 }

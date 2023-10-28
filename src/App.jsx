@@ -4,6 +4,8 @@ import React from "react";
 import {HomePage} from "./pages/HomePage.jsx";
 import {GuessNumberPage} from "./pages/GuessNumberPage.jsx";
 import {ChallengePage} from "./pages/ChallengePage.jsx";
+import { AuthContext } from './contexts/AuthContext';
+import useAuth from './hooks/useAuth'
 
 const router = createBrowserRouter([
   {
@@ -21,8 +23,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const auth = useAuth()
   return (
-    <RouterProvider router={router}/>
+    <AuthContext.Provider value={auth}>
+      <RouterProvider router={router}/>
+    </AuthContext.Provider>
   )
 }
 
